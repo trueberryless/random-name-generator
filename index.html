@@ -92,7 +92,6 @@
                 Comma: "Comma",
             },
             Special: "Special",
-            Always: "Always",
         };
 
         const letter_index = {
@@ -158,7 +157,7 @@
                     letter_index.b,
                     letter_index.c,
                     letter_index.d,
-                    letter_index.e,
+                    // letter_index.e,
                     letter_index.f,
                     letter_index.g,
                     letter_index.j,
@@ -998,7 +997,7 @@
                 letter: "y",
                 probability: 2.11,
                 length: 1,
-                type: LetterType.Always,
+                type: LetterType.Consonant,
                 can_be_double: false,
                 can_be_at_start: false,
                 can_be_in_middle: true,
@@ -1591,8 +1590,8 @@
             let company_letters = [];
 
             let possible_lengths = [
-                3, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7,
-                7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10,
+                3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+                7, 7, 7, 8, 8, 9, 9, 10,
             ];
             let length = possible_lengths[Random(0, possible_lengths.length)];
 
@@ -1603,7 +1602,7 @@
                 letter = letters[index_probability[Random(0, index_probability.length)]];
 
                 // Überprüfungen auf bestimmte Bedingungen
-                let possible_types = [LetterType.Always];
+                let possible_types = [];
                 let possible_letters_index = [];
                 for (let i = 0; i < letters.length; i++) {
                     possible_letters_index.push(i);
@@ -1639,7 +1638,7 @@
                             break;
                     }
 
-                    // mind. 3 Buchstaben
+                    // mind. 3 Buchstaben, ersten beiden Buchstaben dürfen nicht gleich sein (deswegen 3 nicht 2)
                     if (company_letters.length >= 3) {
                         // die 2 vorhergegangenen Buchstaben sind von unterschiedlichen Typen
                         if (
@@ -1658,6 +1657,8 @@
                         possible_letters.push(letters[possible_letters_index[i]].letter);
                     }
                 }
+
+                let counter = 0;
 
                 while (
                     !possible_types.includes(letter.type) ||
@@ -1709,7 +1710,7 @@
         }
 
         function Copy(element) {
-            navigator.clipboard.writeText(element.innerHTML.toLowerCase());
+            navigator.clipboard.writeText(element.innerHTML);
         }
 
         function convertPXToVH(px) {
